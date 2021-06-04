@@ -3,6 +3,7 @@ import { db } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardContent, Typography } from '@material-ui/core';
 import { CheckCircleSharp } from '@material-ui/icons';
+import firebase from 'firebase';
 
 const useStyles = makeStyles({
   root: {
@@ -26,14 +27,16 @@ function GetQuestions() {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    db.collection('questions').onSnapshot((snapshot) => {
-      setQuestions(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ques: doc.data(),
-        }))
-      );
-    });
+    db.collection('questions')
+      .where('cId', '==', firebase.auth().currentUser.uid)
+      .onSnapshot((snapshot) => {
+        setQuestions(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ques: doc.data(),
+          }))
+        );
+      });
     console.log(questions);
   }, []);
   return (
