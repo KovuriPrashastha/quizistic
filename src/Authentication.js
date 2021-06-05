@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import { fire } from './firebase.js';
-import Home from './Home';
+import NewHome from './NewHome';
 
 function Authentication() {
   const [user, setUser] = useState('');
@@ -92,7 +92,7 @@ function Authentication() {
   }, []);
 
   function renderAdmin() {
-    return <Home />;
+    return <NewHome />;
   }
 
   return (
