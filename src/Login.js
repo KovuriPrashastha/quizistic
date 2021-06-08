@@ -1,6 +1,9 @@
 import React from 'react';
-
-function login({
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Button, TextField } from '@material-ui/core';
+import StudentQuiz from './StudentQuiz';
+import { db } from './firebase';
+function Login({
   signInPasswordError,
   signInEmailError,
   signInEmail,
@@ -19,6 +22,76 @@ function login({
   passwordError,
   userNull,
 }) {
+  const [quizCode, setQuizCode] = React.useState('');
+  // const [user, setUser] = React.useState('');
+  // const [name, setName] = React.useState('');
+  const handleQuizCode = (event) => {
+    // var code = event.target.value;
+    setQuizCode(event.target.value);
+    console.log(quizCode, event.target.value);
+  };
+  //const [getCode, setGetCode] = React.useState();
+  const [questions, setQuestions] = React.useState();
+  // const [urlMap, setUrlMap] = React.useState();
+  var code;
+  const getQuestions = () => {
+    //getUniqueCode();
+
+    db.collection('allQuizes')
+      .doc(code[0])
+      .collection(code[1])
+      .onSnapshot((snapshot) => {
+        setQuestions(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ques: doc.data(),
+          }))
+        );
+      });
+  };
+
+  function getUniqueCode() {
+    db.collection('generatedQuizes')
+      .doc(quizCode)
+      .collection('urlMap')
+      .get()
+      .then((snap) => {
+        // snap is a QuerySnapshot
+        if (snap.empty) {
+          console.error('No such document!');
+        } else {
+          // Seems like you're expecting either 0 or 1 documents
+          // Easiest solution is to just grab the first in this case
+          let doc = snap.docs[0];
+          console.log('hii', doc.data());
+          code = doc.data().url.split('/');
+          console.log(code[0], code[1]);
+          //    setUser(code[0]);
+          //  setName(code[1]);
+          console.log('now here  ', code[0], code[1]);
+          //console.log('use state variables here ', name, user);
+          setTimeout(getQuestions, 100);
+          // Make sure to get the data from the doc before getting fields
+          if (doc.data().user) {
+            doc
+              .data()
+              .user.get()
+              .then((res) => {
+                if (!res.exists) {
+                  console.log('user ref not found!');
+                }
+                return res.data();
+              })
+              .catch((err) => console.error(err));
+          }
+        }
+        return;
+      })
+      .catch((err) => {
+        console.log('Error getting document', err);
+      });
+  }
+
   return (
     <center className='landing-page'>
       <h5 className='form__heading'> Sign - In Below </h5>
@@ -82,8 +155,29 @@ function login({
       <button className='btn' onClick={handleSignup}>
         Sign Up
       </button>
+      <Router>
+        <div>
+          <Link to='/attemptquiz'>
+            <TextField
+              value={quizCode}
+              onChange={handleQuizCode}
+              placeholder='get code'
+            ></TextField>
+            <Button onClick={getUniqueCode}>Get Quiz</Button>
+          </Link>
+        </div>
+        <Switch>
+          {questions ? (
+            <Route exact path='/attemptquiz'>
+              <StudentQuiz questions={questions} />
+            </Route>
+          ) : (
+            <div></div>
+          )}
+        </Switch>
+      </Router>
     </center>
   );
 }
 
-export default login;
+export default Login;

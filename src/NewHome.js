@@ -6,6 +6,7 @@ import { fire } from './firebase';
 import CreateQuiz from './CreateQuiz';
 import Home from './Home';
 import DisplayQuiz from './DisplayQuiz';
+import GenerateQuiz from './GenerateQuiz';
 
 // This site has 3 pages, all of which are rendered
 // dynamically in the browser (not server rendered).
@@ -35,6 +36,11 @@ export default function NewHome() {
         <Link to='/displayquiz'>
           <Button color='primary' variant='outlined'>
             Display Quiz
+          </Button>
+        </Link>
+        <Link to='/generatequiz'>
+          <Button color='primary' variant='outlined'>
+            Generate Quiz
           </Button>
         </Link>
         <Button
@@ -67,19 +73,11 @@ export default function NewHome() {
           <Route path='/displayquiz'>
             <DisplayQuiz />
           </Route>
+          <Route path='/generatequiz'>
+            <GenerateQuiz />
+          </Route>
         </Switch>
       </div>
     </Router>
-  );
-}
-
-// You can think of these components as "pages"
-// in your app.
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
   );
 }

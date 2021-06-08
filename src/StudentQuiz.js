@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { db } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -9,7 +9,6 @@ import {
   Button,
 } from '@material-ui/core';
 import { CheckCircleSharp } from '@material-ui/icons';
-import firebase from 'firebase';
 
 const useStyles = makeStyles({
   root: {
@@ -27,16 +26,18 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 });
-function GetData(props) {
+
+function StudentQuiz({ questions }) {
+  const classes = useStyles();
   return (
     <div>
-      {props.questions.map(({ id, ques }, index) => (
-        <Card className={props.classes.root} variant='outlined'>
+      {questions.map(({ id, ques }, index) => (
+        <Card className={classes.root} variant='outlined'>
           <CardContent>
             <Typography variant='h5' component='h2'>
               {index + 1 + '. ' + ques.question}
             </Typography>
-            <Typography className={props.classes.pos} color='textSecondary'>
+            <Typography className={classes.pos} color='textSecondary'>
               {ques.option1 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -44,7 +45,7 @@ function GetData(props) {
               )}
               {' ' + ques.option1}
             </Typography>
-            <Typography className={props.classes.pos} color='textSecondary'>
+            <Typography className={classes.pos} color='textSecondary'>
               {ques.option2 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -52,7 +53,7 @@ function GetData(props) {
               )}
               {' ' + ques.option2}
             </Typography>
-            <Typography className={props.pos} color='textSecondary'>
+            <Typography className={classes.pos} color='textSecondary'>
               {ques.option3 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -60,7 +61,7 @@ function GetData(props) {
               )}
               {' ' + ques.option3}
             </Typography>
-            <Typography className={props.classes.pos} color='textSecondary'>
+            <Typography className={classes.pos} color='textSecondary'>
               {ques.option4 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -75,46 +76,4 @@ function GetData(props) {
   );
 }
 
-function DisplayQuiz() {
-  const classes = useStyles();
-  const [questions, setQuestions] = useState([]);
-  const [quizName, setQuizName] = useState('');
-
-  const handleQuizName = (event) => {
-    setQuizName(event.target.value);
-  };
-
-  const getQuestions = () => {
-    db.collection('allQuizes')
-      .doc(firebase.auth().currentUser.displayName)
-      .collection(quizName)
-
-      .onSnapshot((snapshot) => {
-        setQuestions(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ques: doc.data(),
-          }))
-        );
-      });
-  };
-  return (
-    <div>
-      <TextField
-        id='filled-basic'
-        label='Enter Quiz Name'
-        variant='filled'
-        value={quizName}
-        onChange={handleQuizName}
-      />
-      <Button onClick={getQuestions}>Get</Button>
-      {quizName === '' ? (
-        <div>Nothing</div>
-      ) : (
-        <GetData questions={questions} classes={classes} />
-      )}
-    </div>
-  );
-}
-
-export default DisplayQuiz;
+export default StudentQuiz;

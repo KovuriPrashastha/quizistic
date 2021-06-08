@@ -14,7 +14,6 @@ import {
   TextField,
   FormControlLabel,
 } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import firebase from 'firebase';
 
@@ -51,7 +50,7 @@ function Home() {
   };
 
   const handleClose = () => {
-    console.log(question, option1, option2, option3, option4);
+    // console.log(question, option1, option2, option3, option4);
     setOpen(false);
   };
   const uploadQuestion = () => {
