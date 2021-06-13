@@ -163,21 +163,16 @@
 // export default StudentQuiz;
 
 import React from 'react';
-import { db } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Card,
   CardContent,
-  Typography,
   TextField,
-  Button,
   FormControl,
   Radio,
   RadioGroup,
   FormControlLabel,
 } from '@material-ui/core';
-
-import { CheckCircleSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {

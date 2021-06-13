@@ -8,7 +8,7 @@ import CreateQuiz from './CreateQuiz';
 import Home from './Home';
 import DisplayQuiz from './DisplayQuiz';
 import GenerateQuiz from './GenerateQuiz';
-
+import GetResponses from './GetResponses';
 export default function NewHome() {
   return (
     <Router>
@@ -35,6 +35,11 @@ export default function NewHome() {
             Generate Quiz
           </Button>
         </Link>
+        <Link to='/getresponses'>
+          <Button color='primary' variant='outlined'>
+            Get Responses
+          </Button>
+        </Link>
         <Button
           startIcon={<ExitToAppTwoTone />}
           onClick={() => {
@@ -59,6 +64,9 @@ export default function NewHome() {
           </Route>
           <Route path='/generatequiz'>
             <GenerateQuiz />
+          </Route>
+          <Route path='/getresponses'>
+            <GetResponses />
           </Route>
         </Switch>
       </div>
