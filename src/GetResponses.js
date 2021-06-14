@@ -10,8 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-
-
 function GetResponses() {
   const [quizName, setQuizName] = useState();
   const [responses, setResponses] = useState();
@@ -26,7 +24,7 @@ function GetResponses() {
       db.collection('responses')
         .doc(firebase.auth().currentUser.displayName)
         .collection(quizName)
-
+        .orderBy('marks', 'desc')
         .onSnapshot((snapshot) => {
           setResponses(
             snapshot.docs.map((doc) => ({
@@ -40,42 +38,56 @@ function GetResponses() {
   };
   return (
     <div>
-      <TextField style={{padding:10}}
+      <TextField
+        style={{ padding: 10 }}
         value={quizName}
         onChange={handleQuizName}
         placeholder='get code'
-       />
-       
+      />
+
       {responses ? (
         <center>
           {responses.map(({ id, student }, index) => (
-        
-              <TableContainer style={{margin:10,width:300}} component={Paper}>
-      <Table aria-label="simple table">
-      
-        <TableBody>
-       
-            <TableRow >
-           <TableCell align="left">  <Typography>Name </Typography></TableCell>
-              <TableCell align="left">  <Typography>{student.name}</Typography></TableCell>
-              
-            </TableRow>
-            <TableRow >
-           <TableCell align="left">  <Typography>Marks </Typography></TableCell>
-              <TableCell align="left">  <Typography>{student.marks}</Typography></TableCell>
-              
-            </TableRow>
-     
-        </TableBody>
-      </Table>
-    </TableContainer>
-          
+            <TableContainer
+              style={{ margin: 10, width: 300 }}
+              component={Paper}
+            >
+              <Table aria-label='simple table'>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align='left'>
+                      {' '}
+                      <Typography>Name </Typography>
+                    </TableCell>
+                    <TableCell align='left'>
+                      {' '}
+                      <Typography>{student.name}</Typography>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align='left'>
+                      {' '}
+                      <Typography>Marks </Typography>
+                    </TableCell>
+                    <TableCell align='left'>
+                      {' '}
+                      <Typography>{student.marks}</Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           ))}
         </center>
       ) : (
         <div></div>
       )}
-      <Button style={{margin:10}} onClick={getResponses} color='primary' variant='outlined'>
+      <Button
+        style={{ margin: 10 }}
+        onClick={getResponses}
+        color='primary'
+        variant='outlined'
+      >
         Get Responses
       </Button>
     </div>

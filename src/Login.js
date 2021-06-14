@@ -32,13 +32,17 @@ function Login({
   const [quizName, setQuizName] = useState();
   const [questions, setQuestions] = useState();
   const [responserName, setResponserName] = useState('');
+  const [openSignUp, setOpenSignUp] = useState(false);
   const handleResponserName = (event) => {
     setResponserName(event.target.value);
   };
 
   var code;
   var answersResponse = { marks: 0 };
-
+  const handleOpenSignUp = () => {
+    if (openSignUp) setOpenSignUp(false);
+    else setOpenSignUp(true);
+  };
   const getQuestions = () => {
     db.collection('allQuizes')
       .doc(code[0])
@@ -127,7 +131,10 @@ function Login({
   }
   return (
     <center className='landing-page'>
-      <h5 className='form__heading'> Sign - In Below </h5>
+      <Typography style={{ fontSize: 20 }} className='form__heading'>
+        {' '}
+        Sign In to create Quiz{' '}
+      </Typography>
       <input
         placeholder='Email'
         className='form__field'
@@ -151,43 +158,60 @@ function Login({
         Sign In
       </button>
       <br />
-      <h5 className='form__heading'> Sign - Up Below </h5>
-      <input
-        className='form__field'
-        placeholder='Your Name'
-        type='text'
-        autoFocus
-        required
-        value={userName}
-        onChange={(e) => {
-          setUserName(e.target.value);
-        }}
-      />
-      {userNull ? <p className='error_'>Enter A User Name</p> : null}
       <br />
-      <br />
-      <input
-        className='form__field'
-        placeholder='Email'
-        type='text'
-        autoFocus
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <p className='error_'> {emailError} </p>
-      <input
-        className='form__field'
-        placeholder='Choose Your Password'
-        type='password'
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <p className='error_'> {passwordError} </p>
-      <button className='btn' onClick={handleSignup}>
-        Sign Up
-      </button>
+      <Typography
+        style={{ fontSize: 14, cursor: 'pointer' }}
+        onClick={handleOpenSignUp}
+      >
+        Not Registered? Create an account
+        <strong> Sign Up </strong>
+      </Typography>
+      {openSignUp ? (
+        <div>
+          <Typography style={{ fontSize: 20 }} className='form__heading'>
+            {' '}
+            Sign Up below{' '}
+          </Typography>
+          <input
+            className='form__field'
+            placeholder='Your Name'
+            type='text'
+            autoFocus
+            required
+            value={userName}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          />
+          {userNull ? <p className='error_'>Enter A User Name</p> : null}
+          <br />
+          <br />
+          <input
+            className='form__field'
+            placeholder='Email'
+            type='text'
+            autoFocus
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <p className='error_'> {emailError} </p>
+          <input
+            className='form__field'
+            placeholder='Choose Your Password'
+            type='password'
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <p className='error_'> {passwordError} </p>
+          <button className='btn' onClick={handleSignup}>
+            Sign Up
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
       <Router>
         <div>
           <TextField
