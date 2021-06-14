@@ -10,12 +10,13 @@ import {
 } from '@material-ui/core';
 import { CheckCircleSharp } from '@material-ui/icons';
 import firebase from 'firebase';
+import './constant.css';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 200,
     maxWidth: 600,
-    width:"80%"
+    width: '80%',
   },
   bullet: {
     display: 'inline-block',
@@ -34,45 +35,61 @@ function GetData(props) {
     <div>
       {props.questions.map(({ id, ques }, index) => (
         <center>
-        <Card className={props.classes.root} variant='outlined' style={{}}>
-          <CardContent>
-            <Typography align="left" variant='h5' component='h2'>
-              {index + 1 + '. ' + ques.question}
-            </Typography>
-            <Typography align="left" className={props.classes.pos} color='textSecondary'>
-              {ques.option1 === ques.answer ? (
-                <CheckCircleSharp style={{ color: 'green' }} />
-              ) : (
-                ''
-              )}
-              {' ' + ques.option1}
-            </Typography>
-            <Typography align="left" className={props.classes.pos} color='textSecondary'>
-              {ques.option2 === ques.answer ? (
-                <CheckCircleSharp style={{ color: 'green' }} />
-              ) : (
-                ''
-              )}
-              {' ' + ques.option2}
-            </Typography>
-            <Typography align="left" className={props.pos} color='textSecondary'>
-              {ques.option3 === ques.answer ? (
-                <CheckCircleSharp style={{ color: 'green' }} />
-              ) : (
-                ''
-              )}
-              {' ' + ques.option3}
-            </Typography>
-            <Typography align="left" className={props.classes.pos} color='textSecondary'>
-              {ques.option4 === ques.answer ? (
-                <CheckCircleSharp style={{ color: 'green' }} />
-              ) : (
-                ''
-              )}
-              {' ' + ques.option4}
-            </Typography>
-          </CardContent>
-        </Card>
+          <Card className={props.classes.root} variant='outlined' style={{}}>
+            <CardContent>
+              <Typography align='left' variant='h5' component='h2'>
+                {index + 1 + '. ' + ques.question}
+              </Typography>
+              <Typography
+                align='left'
+                className={props.classes.pos}
+                color='textSecondary'
+              >
+                {ques.option1 === ques.answer ? (
+                  <CheckCircleSharp style={{ color: 'green' }} />
+                ) : (
+                  ''
+                )}
+                {' ' + ques.option1}
+              </Typography>
+              <Typography
+                align='left'
+                className={props.classes.pos}
+                color='textSecondary'
+              >
+                {ques.option2 === ques.answer ? (
+                  <CheckCircleSharp style={{ color: 'green' }} />
+                ) : (
+                  ''
+                )}
+                {' ' + ques.option2}
+              </Typography>
+              <Typography
+                align='left'
+                className={props.pos}
+                color='textSecondary'
+              >
+                {ques.option3 === ques.answer ? (
+                  <CheckCircleSharp style={{ color: 'green' }} />
+                ) : (
+                  ''
+                )}
+                {' ' + ques.option3}
+              </Typography>
+              <Typography
+                align='left'
+                className={props.classes.pos}
+                color='textSecondary'
+              >
+                {ques.option4 === ques.answer ? (
+                  <CheckCircleSharp style={{ color: 'green' }} />
+                ) : (
+                  ''
+                )}
+                {' ' + ques.option4}
+              </Typography>
+            </CardContent>
+          </Card>
         </center>
       ))}
     </div>
@@ -104,32 +121,31 @@ function DisplayQuiz() {
   };
   return (
     <div>
-    <center>
-    <div style={{display:"flex", flexDirection:"column",width:300}}> 
-
-      <TextField
-      style={{padding:10}}
-      size="small"
-      variant='outlined'
-
-        label='Enter Quiz Name'
-        value={quizName}
-        onChange={handleQuizName}
-      />
-   <center>
-      <Button style={{width:100}} onClick={getQuestions}>Get</Button>
+      <center>
+        <div style={{ display: 'flex', flexDirection: 'column', width: 300 }}>
+          <TextField
+            style={{ padding: 10 }}
+            size='small'
+            variant='outlined'
+            label='Enter Quiz Name'
+            value={quizName}
+            onChange={handleQuizName}
+          />
+          <center>
+            <Button
+              className='button button1'
+              style={{ width: 100 }}
+              onClick={getQuestions}
+            >
+              Get
+            </Button>
+          </center>
+        </div>
       </center>
-      </div>
-      
-      </center>
-      {quizName === '' ? (
-       null
-      ) : (
+      {quizName === '' ? null : (
         <GetData questions={questions} classes={classes} />
       )}
-  
     </div>
-    
   );
 }
 

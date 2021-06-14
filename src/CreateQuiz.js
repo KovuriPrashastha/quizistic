@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import firebase from 'firebase';
+import './constant.css';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -101,10 +102,9 @@ function Home() {
   };
   return (
     <div>
-    
       <TextField
-      style={{padding:10}}
-      size="small"
+        style={{ padding: 10 }}
+        size='small'
         label='Enter Quiz Name'
         variant='outlined'
         value={quizName}
@@ -112,6 +112,7 @@ function Home() {
       />
       <br />
       <Button
+        className='button button1'
         startIcon={<AddTwoTone />}
         color='primary'
         variant='outlined'
@@ -183,7 +184,11 @@ function Home() {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={uploadQuestion} color='primary'>
+          <Button
+            className='button button1'
+            onClick={uploadQuestion}
+            color='primary'
+          >
             Save Question
           </Button>
           {/* <Snackbar

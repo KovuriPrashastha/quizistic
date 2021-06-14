@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
-import { TextField, Button, Card, Typography } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Card,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+} from '@material-ui/core';
 import { db } from './firebase.js';
 import firebase from 'firebase';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
+import './constant.css';
 
 function GetResponses() {
   const [quizName, setQuizName] = useState();
@@ -87,6 +93,7 @@ function GetResponses() {
         onClick={getResponses}
         color='primary'
         variant='outlined'
+        className='button button1'
       >
         Get Responses
       </Button>
