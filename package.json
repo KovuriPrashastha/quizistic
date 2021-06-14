@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "firebase": "^8.6.3",
     "otp-generator": "^2.0.1",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",

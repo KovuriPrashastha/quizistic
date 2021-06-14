@@ -7,10 +7,23 @@ import {
   Typography,
   TextField,
   Button,
+  IconButton,
 } from '@material-ui/core';
-import { CheckCircleSharp } from '@material-ui/icons';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+} from '@material-ui/core';
+import { CheckCircleSharp, Edit } from '@material-ui/icons';
 import firebase from 'firebase';
 import './constant.css';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   root: {
@@ -30,12 +43,189 @@ const useStyles = makeStyles({
     marginBottom: 12,
   },
 });
+var questionToEdit;
+var qId;
+var qName;
+var q, o1, o2, o3, o4, ans;
+function SimpleDialog(props) {
+  const classes = useStyles();
+  const { onClose, selectedValue, open } = props;
+  const [question, setQuestion] = React.useState(q);
+  // const [option1, setOption1] = React.useState(o1);
+  // const [option2, setOption2] = React.useState(o2);
+  // const [option3, setOption3] = React.useState(o3);
+  // const [option4, setOption4] = React.useState(o4);
+  const [chooseAnswer, setChooseAnswer] = React.useState('');
+  const handleChange = (event) => {
+    setQuestion(event.target.value);
+    q = event.target.value;
+  };
+  const handleChangeOp1 = (event) => {
+    // setOption1(event.target.value);
+    o1 = event.target.value;
+  };
+  const handleChangeOp2 = (event) => {
+    //setOption2(event.target.value);
+    o2 = event.target.value;
+  };
+  const handleChangeOp3 = (event) => {
+    // setOption3(event.target.value);
+    o3 = event.target.value;
+  };
+  const handleChangeOp4 = (event) => {
+    //setOption4(event.target.value);
+    o4 = event.target.value;
+  };
+  const handleSetAnswer = (event) => {
+    setChooseAnswer(event.target.value);
+    ans = event.target.value;
+    console.log(ans);
+  };
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = (value) => {
+    onClose(value);
+  };
+  function handleUpdateQuestion() {
+    console.log(firebase.auth().currentUser.displayName, qName, qId);
+    db.collection('allQuizes')
+      .doc(firebase.auth().currentUser.displayName)
+      .collection(qName)
+      .doc(qId)
+      .update({
+        question: q,
+        option1: o1,
+        option2: o2,
+        option3: o3,
+        option4: o4,
+        answer: chooseAnswer,
+      });
+
+    // setQuestion('');
+    // setOption1('');
+    // setOption2('');
+    // setOption3('');
+    // setOption4('');
+  }
+  if (questionToEdit) {
+    // setQuestion(questionToEdit.question);
+    // setOption1(questionToEdit.option1);
+    // setOption2(questionToEdit.option2);
+    // setOption3(questionToEdit.option3);
+    // setOption4(questionToEdit.option4);
+    return (
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='max-width-dialog-title'
+      >
+        <DialogTitle id='max-width-dialog-title'>
+          Edit your question
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText></DialogContentText>
+          <form className={classes.form} noValidate>
+            <FormControl className={classes.formControl}>
+              <TextField
+                label='Enter Question'
+                value={q}
+                onChange={handleChange}
+                id='standard-full-width'
+                style={{ width: '100%' }}
+                inputStyle={{ width: '100%' }}
+                fullWidth
+                margin='normal'
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <RadioGroup value={chooseAnswer} onChange={handleSetAnswer}>
+                <FormControlLabel
+                  value={o1}
+                  control={<Radio />}
+                  label={<TextField value={o1} onChange={handleChangeOp1} />}
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  value={o2}
+                  label={<TextField value={o2} onChange={handleChangeOp2} />}
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  value={o3}
+                  label={<TextField value={o3} onChange={handleChangeOp3} />}
+                />
+                <FormControlLabel
+                  control={<Radio />}
+                  value={o4}
+                  label={<TextField value={o4} onChange={handleChangeOp4} />}
+                />
+              </RadioGroup>
+            </FormControl>
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            className='button button1'
+            onClick={handleUpdateQuestion}
+            color='primary'
+          >
+            Edit Question
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+  return <div></div>;
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
+//const emails = ['username@gmail.com', 'user02@gmail.com'];
 function GetData(props) {
+  const [open, setOpen] = React.useState(false);
+  //const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+
+  function handleQuestionToEdit(ques, id, qname) {
+    console.log('hi');
+    questionToEdit = ques;
+    qId = id;
+    qName = qname;
+    q = ques.question;
+    o1 = ques.option1;
+    o2 = ques.option2;
+    o3 = ques.option3;
+    o4 = ques.option4;
+    ans = ques.answer;
+    handleClickOpen();
+    console.log(questionToEdit);
+    console.log('id here : ', id, qname, o1, o2, o3, o4);
+  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    //setSelectedValue(value);
+  };
   return (
     <div>
       {props.questions.map(({ id, ques }, index) => (
         <center>
-          <Card className={props.classes.root} variant='outlined' style={{}}>
+          <Card className={props.classes.root} variant='outlined'>
+            <IconButton>
+              <Edit
+                onClick={(event) => handleQuestionToEdit(ques, id, props.qName)}
+              />
+            </IconButton>
+            <SimpleDialog open={open} onClose={handleClose} question={ques} />
             <CardContent>
               <Typography align='left' variant='h5' component='h2'>
                 {index + 1 + '. ' + ques.question}
@@ -102,6 +292,7 @@ function DisplayQuiz() {
   const [quizName, setQuizName] = useState('');
 
   const handleQuizName = (event) => {
+    qName = event.target.value;
     setQuizName(event.target.value);
   };
 
@@ -143,7 +334,7 @@ function DisplayQuiz() {
         </div>
       </center>
       {quizName === '' ? null : (
-        <GetData questions={questions} classes={classes} />
+        <GetData questions={questions} classes={classes} qName={quizName} />
       )}
     </div>
   );
