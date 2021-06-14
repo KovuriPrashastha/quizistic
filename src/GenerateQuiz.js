@@ -36,24 +36,30 @@ function GenerateQuiz() {
     document.execCommand('copy');
   }
   return (
-    <div>
+    <center>
+    <div style={{display:"flex", justifyContent:"space-evenly",flexDirection:"column", height:200,width:300}}>
       <TextField
+      size="small"
         id='filled-basic'
         label='Enter Quiz Name'
         variant='filled'
         value={quizName}
         onChange={handleQuizName}
       />
-      <br />
+  
       <Button onClick={getUrl} color='primary' variant='outlined'>
         Generate Code
       </Button>
-      <br />
-      <TextField id='my-url' variant='filled' value={otp} />
+      <div>
+      <TextField 
+      size="small"
+      
+      id='my-url' variant='filled' value={otp} />
       <IconButton onClick={copyUrl}>
         <FileCopy />
       </IconButton>
-    </div>
+      </div>    </div>
+    </center>
   );
 }
 

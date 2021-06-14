@@ -9,37 +9,39 @@ import Home from './Home';
 import DisplayQuiz from './DisplayQuiz';
 import GenerateQuiz from './GenerateQuiz';
 import GetResponses from './GetResponses';
+
 export default function NewHome() {
   return (
+    <div>
     <Router>
-      <div>
-        <Link to='/'>
-          <Button color='primary' variant='outlined'>
+      <center>
+      <div style={{padding:20, display:"flex",justifyContent:"space-around", width:800}}>
+        
+          <Button component={Link} to={"/"} color='primary' variant='outlined'>
             Home
           </Button>
-        </Link>
 
-        <Link to='/createquiz'>
-          <Button color='primary' variant='outlined'>
+
+       
+          <Button component={Link} to={"/createquiz"} color='primary' variant='outlined'>
             Create Quiz
           </Button>
-        </Link>
+       
 
-        <Link to='/displayquiz'>
-          <Button color='primary' variant='outlined'>
+          <Button component={Link} to={"/displayquiz"} color='primary' variant='outlined'>
             Display Quiz
           </Button>
-        </Link>
-        <Link to='/generatequiz'>
-          <Button color='primary' variant='outlined'>
+     
+        
+          <Button component={Link} to={"/generatequiz"} color='primary' variant='outlined'>
             Generate Quiz
           </Button>
-        </Link>
-        <Link to='/getresponses'>
-          <Button color='primary' variant='outlined'>
+       
+       
+          <Button component={Link} to={"/getresponses"} color='primary' variant='outlined'>
             Get Responses
           </Button>
-        </Link>
+     
         <Button
           startIcon={<ExitToAppTwoTone />}
           onClick={() => {
@@ -50,9 +52,10 @@ export default function NewHome() {
         >
           Logout
         </Button>
-
-        <hr />
-        <Switch>
+      </div>
+      </center>
+     
+      <Switch>
           <Route exact path='/'>
             <Home />
           </Route>
@@ -69,7 +72,7 @@ export default function NewHome() {
             <GetResponses />
           </Route>
         </Switch>
-      </div>
     </Router>
+    </div>
   );
 }

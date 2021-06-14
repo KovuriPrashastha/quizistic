@@ -14,6 +14,8 @@ import firebase from 'firebase';
 const useStyles = makeStyles({
   root: {
     minWidth: 200,
+    maxWidth: 600,
+    width:"80%"
   },
   bullet: {
     display: 'inline-block',
@@ -31,12 +33,13 @@ function GetData(props) {
   return (
     <div>
       {props.questions.map(({ id, ques }, index) => (
-        <Card className={props.classes.root} variant='outlined'>
+        <center>
+        <Card className={props.classes.root} variant='outlined' style={{}}>
           <CardContent>
-            <Typography variant='h5' component='h2'>
+            <Typography align="left" variant='h5' component='h2'>
               {index + 1 + '. ' + ques.question}
             </Typography>
-            <Typography className={props.classes.pos} color='textSecondary'>
+            <Typography align="left" className={props.classes.pos} color='textSecondary'>
               {ques.option1 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -44,7 +47,7 @@ function GetData(props) {
               )}
               {' ' + ques.option1}
             </Typography>
-            <Typography className={props.classes.pos} color='textSecondary'>
+            <Typography align="left" className={props.classes.pos} color='textSecondary'>
               {ques.option2 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -52,7 +55,7 @@ function GetData(props) {
               )}
               {' ' + ques.option2}
             </Typography>
-            <Typography className={props.pos} color='textSecondary'>
+            <Typography align="left" className={props.pos} color='textSecondary'>
               {ques.option3 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -60,7 +63,7 @@ function GetData(props) {
               )}
               {' ' + ques.option3}
             </Typography>
-            <Typography className={props.classes.pos} color='textSecondary'>
+            <Typography align="left" className={props.classes.pos} color='textSecondary'>
               {ques.option4 === ques.answer ? (
                 <CheckCircleSharp style={{ color: 'green' }} />
               ) : (
@@ -70,6 +73,7 @@ function GetData(props) {
             </Typography>
           </CardContent>
         </Card>
+        </center>
       ))}
     </div>
   );
@@ -100,20 +104,32 @@ function DisplayQuiz() {
   };
   return (
     <div>
+    <center>
+    <div style={{display:"flex", flexDirection:"column",width:300}}> 
+
       <TextField
-        id='filled-basic'
+      style={{padding:10}}
+      size="small"
+      variant='outlined'
+
         label='Enter Quiz Name'
-        variant='filled'
         value={quizName}
         onChange={handleQuizName}
       />
-      <Button onClick={getQuestions}>Get</Button>
+   <center>
+      <Button style={{width:100}} onClick={getQuestions}>Get</Button>
+      </center>
+      </div>
+      
+      </center>
       {quizName === '' ? (
-        <div>Nothing</div>
+       null
       ) : (
         <GetData questions={questions} classes={classes} />
       )}
+  
     </div>
+    
   );
 }
 

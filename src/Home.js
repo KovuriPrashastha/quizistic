@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from './firebase.js';
 import firebase from 'firebase';
 import { Button } from '@material-ui/core';
+import Quiz from "./quiz.jpg"
 
 export default function Home() {
   const [allQuizes, setAllQuizes] = useState('');
@@ -22,7 +23,7 @@ export default function Home() {
   };
   return (
     <div>
-      <Button onClick={print}>Click</Button>
+     <img src={Quiz} />
     </div>
   );
 }

@@ -100,11 +100,13 @@ function Home() {
     setQuizName(event.target.value);
   };
   return (
-    <React.Fragment>
+    <div>
+    
       <TextField
-        id='filled-basic'
+      style={{padding:10}}
+      size="small"
         label='Enter Quiz Name'
-        variant='filled'
+        variant='outlined'
         value={quizName}
         onChange={handleQuizName}
       />
@@ -195,7 +197,7 @@ function Home() {
           </Snackbar> */}
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </div>
   );
 }
 
