@@ -22,3 +22,12 @@
   background-color: #5a24b4;
   color: #5a24b4;
 }
+
+/* .login::after {
+  background: url('./images/cover.jpg');
+  background-position: 'center';
+  background-size: 'cover';
+  background-repeat: 'no-repeat';
+  width: '100vw';
+  height: '100vh';
+} */

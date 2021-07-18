@@ -1,9 +1,13 @@
 //login.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography, Paper } from '@material-ui/core';
 import StudentQuiz from './StudentQuiz';
+import { withStyles } from '@material-ui/core/styles';
 import { db } from './firebase';
+//import vector1 from './images/vector2.png';
+import background from './images/background.jpg';
+
 function Login({
   signInPasswordError,
   signInEmailError,
@@ -36,7 +40,11 @@ function Login({
   const handleResponserName = (event) => {
     setResponserName(event.target.value);
   };
-
+  const WhiteTextTypography = withStyles({
+    root: {
+      color: '#FFFFFF',
+    },
+  })(Typography);
   var code;
   var answersResponse = { marks: 0 };
   const handleOpenSignUp = () => {
@@ -120,137 +128,210 @@ function Login({
     storeResult();
     return (
       <div>
-        <Typography variant='h6' gutterBottom>
+        <WhiteTextTypography variant='h6' gutterBottom>
           {'Your response is stored'}
-        </Typography>
-        <Typography variant='h6' gutterBottom>
+        </WhiteTextTypography>
+        <WhiteTextTypography variant='h6' gutterBottom>
           {'Thank You !!'}
-        </Typography>
+        </WhiteTextTypography>
       </div>
     );
   }
   return (
-    <center className='landing-page'>
-      <Typography style={{ fontSize: 20 }} className='form__heading'>
-        {' '}
-        Sign In to create Quiz{' '}
-      </Typography>
-      <input
-        placeholder='Email'
-        className='form__field'
-        type='text'
-        autoFocus
-        required
-        value={signInEmail}
-        onChange={(e) => setSignInEmail(e.target.value)}
-      />
-      <p className='error_'> {signInEmailError} </p>{' '}
-      <input
-        className='form__field'
-        placeholder='Password'
-        type='password'
-        required
-        value={SignInPassword}
-        onChange={(e) => setSignInPassword(e.target.value)}
-      />
-      <p className='error_'> {signInPasswordError} </p>{' '}
-      <button className='btn' onClick={handleLogin}>
-        Sign In
-      </button>
-      <br />
-      <br />
-      <Typography
-        style={{ fontSize: 14, cursor: 'pointer' }}
-        onClick={handleOpenSignUp}
-      >
-        Not Registered? Create an account
-        <strong> Sign Up </strong>
-      </Typography>
-      {openSignUp ? (
-        <div>
-          <Typography style={{ fontSize: 20 }} className='form__heading'>
+    <div
+      className='login'
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        width: '100vw',
+        height: '100vh',
+      }}
+    >
+      {/* <Card styles={{ width: '200px', height: '200px' }}> */}
+
+      <center className='landing-page'>
+        <Paper
+          style={{
+            width: '35%',
+            'border-style': 'solid',
+            'border-color': '#5a24b4',
+            'border-radius': '25px',
+            'border-width': 'thick',
+          }}
+        >
+          {/* <img src={vector1} alt='' width='500' height='400' /> */}
+          <WhiteTextTypography
+            color='#FFFFFF'
+            style={{ fontSize: 20 }}
+            className='form__heading'
+          >
             {' '}
-            Sign Up below{' '}
-          </Typography>
+            Sign In to create Quiz{' '}
+          </WhiteTextTypography>
           <input
-            className='form__field'
-            placeholder='Your Name'
-            type='text'
-            autoFocus
-            required
-            value={userName}
-            onChange={(e) => {
-              setUserName(e.target.value);
-            }}
-          />
-          {userNull ? <p className='error_'>Enter A User Name</p> : null}
-          <br />
-          <br />
-          <input
-            className='form__field'
             placeholder='Email'
+            className='form__field'
             type='text'
             autoFocus
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={signInEmail}
+            onChange={(e) => setSignInEmail(e.target.value)}
           />
-          <p className='error_'> {emailError} </p>
+          <p className='error_'> {signInEmailError} </p>{' '}
           <input
             className='form__field'
-            placeholder='Choose Your Password'
+            placeholder='Password'
             type='password'
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={SignInPassword}
+            onChange={(e) => setSignInPassword(e.target.value)}
           />
-          <p className='error_'> {passwordError} </p>
-          <button className='btn' onClick={handleSignup}>
-            Sign Up
-          </button>
-        </div>
-      ) : (
-        ''
-      )}
-      <Router>
-        <div>
-          <TextField
-            value={quizCode}
-            onChange={handleQuizCode}
-            placeholder='get code'
-          ></TextField>
+          <p className='error_'> {signInPasswordError} </p>{' '}
+          <Button variant='outlined' color='primary' onClick={handleLogin}>
+            Sign In
+          </Button>
           <br />
-          <TextField
-            value={responserName}
-            onChange={handleResponserName}
-            placeholder='Enter Name'
-          ></TextField>
           <br />
-          <Link to='/attemptquiz'>
-            <Button onClick={getUniqueCode}>Get Quiz</Button>
-          </Link>
-        </div>
-        <Switch>
-          {questions ? (
-            <Link>
-              <Route path='/attemptquiz'>{getSingleQuestion}</Route>
-              {/* <Button to='/attemptquiz' color='primary' variant='outlined'>
+        </Paper>
+        <br />
+        <br />
+        <WhiteTextTypography
+          style={{ fontSize: 14, cursor: 'pointer' }}
+          onClick={handleOpenSignUp}
+        >
+          Not Registered? Create an account
+          <strong> Sign Up </strong>
+        </WhiteTextTypography>
+        {openSignUp ? (
+          <Paper
+            style={{
+              width: '35%',
+              'border-style': 'solid',
+              'border-color': '#5a24b4',
+              'border-radius': '25px',
+              'border-width': 'thick',
+            }}
+          >
+            <WhiteTextTypography
+              style={{ fontSize: 20 }}
+              className='form__heading'
+            >
+              {' '}
+              Sign Up below{' '}
+            </WhiteTextTypography>
+            <input
+              className='form__field'
+              placeholder='Your Name'
+              type='text'
+              autoFocus
+              required
+              value={userName}
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
+            />
+            {userNull ? <p className='error_'>Enter A User Name</p> : null}
+            <br />
+            <br />
+            <input
+              className='form__field'
+              placeholder='Email'
+              type='text'
+              autoFocus
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <p className='error_'> {emailError} </p>
+            <input
+              className='form__field'
+              placeholder='Choose Your Password'
+              type='password'
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <p className='error_'> {passwordError} </p>
+            <Button
+              variant='outlined'
+              color='primary'
+              className='btn'
+              onClick={handleSignup}
+            >
+              Sign Up
+            </Button>
+            <br />
+            <br />
+          </Paper>
+        ) : (
+          ''
+        )}
+        <br />
+        <br />
+        <Router>
+          <Paper
+            style={{
+              width: '35%',
+
+              'border-style': 'solid',
+              'border-color': '#5a24b4',
+              'border-radius': '25px',
+              'border-width': 'thick',
+            }}
+          >
+            <br />
+            <TextField
+              value={quizCode}
+              onChange={handleQuizCode}
+              placeholder='Enter Code'
+            ></TextField>
+            <br />
+            <TextField
+              value={responserName}
+              onChange={handleResponserName}
+              placeholder='Enter Name'
+            ></TextField>
+            <br />
+            <br />
+            <Link to='/attemptquiz'>
+              <Button
+                variant='outlined'
+                color='primary'
+                className='btn'
+                onClick={getUniqueCode}
+                disabled={quizCode === '' || responserName === ''}
+              >
+                Get Quiz
+              </Button>
+              <br />
+              <br />
+            </Link>
+          </Paper>
+          <Switch>
+            {questions ? (
+              <Link>
+                <Route path='/attemptquiz'>{getSingleQuestion}</Route>
+                {/* <Button to='/attemptquiz' color='primary' variant='outlined'>
                 Next Question
               </Button> */}
-            </Link>
-          ) : (
-            // <Route exact path='/attemptquiz'>
-            //   {getSingleQuestion}
-            //   {/* {questions.map(({ id, ques }, index) => (
-            //     <StudentQuiz questions={ques} />
-            //   ))} */}
-            //   <Button onClick={getSingleQuestion}>Next Question</Button>
-            // </Route>
-            <div></div>
-          )}
-        </Switch>
-      </Router>
-    </center>
+              </Link>
+            ) : (
+              // <Route exact path='/attemptquiz'>
+              //   {getSingleQuestion}
+              //   {/* {questions.map(({ id, ques }, index) => (
+              //     <StudentQuiz questions={ques} />
+              //   ))} */}
+              //   <Button onClick={getSingleQuestion}>Next Question</Button>
+              // </Route>
+              <div></div>
+            )}
+          </Switch>
+        </Router>
+      </center>
+      {/* </Card> */}
+    </div>
   );
 }
 

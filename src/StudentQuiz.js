@@ -172,6 +172,7 @@ import {
   Radio,
   RadioGroup,
   FormControlLabel,
+  Paper,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -205,8 +206,17 @@ function StudentQuiz({ questions, answersResponse }) {
 
   const classes = useStyles();
   return (
-    <div>
+    <Paper
+      style={{
+        width: '35%',
+        'border-style': 'solid',
+        'border-color': '#5a24b4',
+        'border-radius': '25px',
+        'border-width': 'thick',
+      }}
+    >
       {/* {questions.map(({ id, ques }, index) => ( */}
+
       <Card className={classes.root} variant='outlined'>
         <CardContent>
           <form className={classes.form} noValidate>
@@ -285,7 +295,7 @@ function StudentQuiz({ questions, answersResponse }) {
         </CardContent>
       </Card>
       {/* ))} */}
-    </div>
+    </Paper>
   );
 }
 
