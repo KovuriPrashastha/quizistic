@@ -3,4 +3,4 @@
    participants to collect the responses.
 2. Tech Stack: React, Material-UI(frontend), Firestore
    database, Heroku(hosting)
-3. URL: https://quizistic.herokuapp.com/
+3. URL: https://quizistic1.herokuapp.com/
